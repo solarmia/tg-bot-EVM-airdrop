@@ -1,0 +1,102 @@
+[
+    {
+        "category": "Electronics",
+        "subcategory": "Smartphones",
+        "name": "iPhone 13",
+        "id": "12345",
+        "price": "999.99",
+        "description": "The latest iPhone model with a stunning camera.",
+        "availablity": "In stock",
+        "quantity": "50"
+    },
+    {
+        "category": "Electronics",
+        "subcategory": "T-Shirts",
+        "name": "Graphic Tee",
+        "id": "67890",
+        "price": "19.99",
+        "description": "A comfortable and stylish graphic t-shirt.",
+        "availablity": "In stock",
+        "quantity": "100"
+    },
+    {
+        "category": "Books",
+        "subcategory": "Fiction",
+        "name": "To Kill a Mockingbird",
+        "id": "54321",
+        "price": "12.99",
+        "description": "Classic novel by Harper Lee.",
+        "availablity": "In stock",
+        "quantity": "30"
+    },
+    {
+        "category": "Electronics",
+        "subcategory": "Headphones",
+        "name": "Wireless Headphones",
+        "id": "98765",
+        "price": "79.99",
+        "description": "High-quality wireless headphones with noise cancellation.",
+        "availablity": "Out of stock",
+        "quantity": "0"
+    },
+    {
+        "category": "Books",
+        "subcategory": "Cookware",
+        "name": "Non-Stick Frying Pan",
+        "id": "24680",
+        "price": "29.99",
+        "description": "A durable and non-stick frying pan for your kitchen.",
+        "availablity": "In stock",
+        "quantity": "75"
+    },
+    {
+        "category": "Sports",
+        "subcategory": "Running Shoes",
+        "name": "Running Shoes X",
+        "id": "13579",
+        "price": "69.99",
+        "description": "Comfortable running shoes for your workouts.",
+        "availablity": "In stock",
+        "quantity": "40"
+    },
+    {
+        "category": "Books",
+        "subcategory": "Skincare",
+        "name": "Moisturizing Cream",
+        "id": "11223",
+        "price": "15.99",
+        "description": "Hydrating moisturizing cream for all skin types.",
+        "availablity": "In stock",
+        "quantity": "90"
+    },
+    {
+        "category": "Sports",
+        "subcategory": "Puzzles",
+        "name": "500-Piece Jigsaw Puzzle",
+        "id": "88776",
+        "price": "19.99",
+        "description": "A challenging jigsaw puzzle for hours of fun.",
+        "availablity": "In stock",
+        "quantity": "25"
+    },
+    {
+        "category": "Sports",
+        "subcategory": "Lamps",
+        "name": "Table Lamp",
+        "id": "33221",
+        "price": "39.99",
+        "description": "Elegant table lamp for your home decor.",
+        "availablity": "In stock",
+        "quantity": "60"
+    },
+    {
+        "category": "Garden",
+        "subcategory": "Tools",
+        "name": "Gardening Shovel",
+        "id": "66553",
+        "price": "24.99",
+        "description": "Durable gardening shovel for outdoor enthusiasts.",
+        "availablity": "In stock",
+        "quantity": "35"
+    }
+]
