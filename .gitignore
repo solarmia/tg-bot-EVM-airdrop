@@ -1,5 +1,4 @@
-tracker/__pycache__/
-scanner/node_modules/
-tracker/venv/
 node_modules
 .env
+todo
+test.ts
