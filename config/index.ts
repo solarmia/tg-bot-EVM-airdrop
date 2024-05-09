@@ -4,6 +4,7 @@ dotenv.config();
 
 export const botToken = process.env.TOKEN!
 export const mongoUrl = process.env.MONGO_URL!
+export const webSite = process.env.WEB_SITE_URL!
 
 export const init = async () => {
     connectMongoDB()

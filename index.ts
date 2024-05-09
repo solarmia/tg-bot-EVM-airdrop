@@ -36,7 +36,7 @@ bot.on(`message`, async (msg) => {
                     chatId,
                     result.title, {
                     reply_markup: {
-                        force_reply: false,
+                        inline_keyboard: result.content
                     }, parse_mode: 'HTML'
                 })
                 break;
@@ -48,8 +48,7 @@ bot.on(`message`, async (msg) => {
                     result.title, {
                     reply_markup: {
                         inline_keyboard: result.content,
-                        force_reply: false,
-                    }
+                    }, parse_mode: 'HTML'
                 })
                 break;
 
@@ -62,7 +61,7 @@ bot.on(`message`, async (msg) => {
                     reply_markup: {
                         inline_keyboard: result.content,
                         force_reply: false, // Disable input field
-                    }
+                    }, parse_mode: 'HTML'
                 })
                 break;
 
@@ -86,26 +85,50 @@ bot.on('callback_query', async (query: CallbackQuery) => {
         let result
         switch (action) {
             case 'wallet_register':
-                const inputmsg = await bot.sendMessage(
-                    chatId,
-                    `Please input your wallet address`
-                )
-
+                const input_msg = await bot.sendMessage(chatId, 'Input your wallet address')
                 bot.once(`message`, async (msg) => {
                     if (msg.text) {
-                        result = await commands.addressCheck(chatId, msg.text)
+                        result = await commands.addressAdd(chatId, msg.text)
                         await bot.sendMessage(
                             chatId,
                             result.title, {
                             reply_markup: {
                                 inline_keyboard: result.content,
                                 force_reply: false, // Disable input field
-                            }
+                            },
+                            parse_mode: 'HTML'
                         })
+
+                        await bot.deleteMessage(chatId, input_msg.message_id)
                     }
                 })
-
                 break
+
+            case 'airdrop':
+                const tx_msg = await bot.sendMessage(chatId, 'Transaction confirming...')
+                result = await commands.handleAirdrop(chatId)
+                await bot.deleteMessage(chatId, tx_msg.message_id)
+                await bot.sendMessage(
+                    chatId,
+                    result.title, {
+                    reply_markup: {
+                        inline_keyboard: result.content,
+                        force_reply: false, // Disable input field
+                    },
+                    parse_mode: 'HTML'
+                })
+                break
+
+            case 'start_menu':
+                result = await commands.welcome(chatId, username)
+                await bot.sendMessage(
+                    chatId,
+                    result.title, {
+                    reply_markup: {
+                        inline_keyboard: result.content
+                    }, parse_mode: 'HTML'
+                })
+                break;
         }
 
     } catch (e) {
