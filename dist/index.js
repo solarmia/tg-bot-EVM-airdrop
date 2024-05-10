@@ -30,6 +30,7 @@ require("dotenv/config");
 const node_telegram_bot_api_1 = __importDefault(require("node-telegram-bot-api"));
 const commands = __importStar(require("./commands"));
 const config_1 = require("./config");
+const utils_1 = require("./utils");
 // import { init } from "./commands/helper";
 const token = config_1.botToken;
 const bot = new node_telegram_bot_api_1.default(token, { polling: true });
@@ -61,16 +62,14 @@ bot.on(`message`, async (msg) => {
                     }, parse_mode: 'HTML'
                 });
                 break;
-            // case `/address`:
-            //     result = await commands.addressAdd(chatId)
-            //     await bot.sendMessage(
-            //         chatId,
-            //         result.title, {
-            //         reply_markup: {
-            //             inline_keyboard: result.content,
-            //         }
-            //     })
-            //     break;
+            case `/address`:
+                result = await commands.addressCheck(chatId);
+                await bot.sendMessage(chatId, result.title, {
+                    reply_markup: {
+                        inline_keyboard: result.content,
+                    }, parse_mode: 'HTML'
+                });
+                break;
             case `/amount`:
                 await bot.deleteMessage(chatId, msgId);
                 result = await commands.amountCheck(chatId);
@@ -78,7 +77,14 @@ bot.on(`message`, async (msg) => {
                     reply_markup: {
                         inline_keyboard: result.content,
                         force_reply: false, // Disable input field
-                    }
+                    }, parse_mode: 'HTML'
+                });
+                break;
+            case `/help`:
+                await bot.deleteMessage(chatId, msgId);
+                result = await commands.help();
+                await bot.sendMessage(chatId, result.title, {
+                    parse_mode: 'HTML'
                 });
                 break;
             default:
@@ -109,10 +115,32 @@ bot.on('callback_query', async (query) => {
                             reply_markup: {
                                 inline_keyboard: result.content,
                                 force_reply: false, // Disable input field
-                            }
+                            },
+                            parse_mode: 'HTML'
                         });
                         await bot.deleteMessage(chatId, input_msg.message_id);
                     }
+                });
+                break;
+            case 'airdrop':
+                const tx_msg = await bot.sendMessage(chatId, 'Transaction confirming...');
+                await (0, utils_1.waitFor)(1000);
+                result = await commands.handleAirdrop(chatId);
+                await bot.deleteMessage(chatId, tx_msg.message_id);
+                await bot.sendMessage(chatId, result.title, {
+                    reply_markup: {
+                        inline_keyboard: result.content,
+                        force_reply: false, // Disable input field
+                    },
+                    parse_mode: 'HTML'
+                });
+                break;
+            case 'start_menu':
+                result = await commands.welcome(chatId, username);
+                await bot.sendMessage(chatId, result.title, {
+                    reply_markup: {
+                        inline_keyboard: result.content
+                    }, parse_mode: 'HTML'
                 });
                 break;
         }

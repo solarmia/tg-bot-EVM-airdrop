@@ -2,6 +2,7 @@ export const commandList = [
     { command: 'start', description: 'Start the bot' },
     { command: 'address', description: 'Input or show your wallet address' },
     { command: 'amount', description: 'Check your claimable amount' },
+    { command: 'help', description: 'About "botname"' },
 ];
 
 import { webSite } from "../config";
@@ -72,14 +73,49 @@ export const addressCheck = async (chatId: number) => {
 export const handleAirdrop = async (chatId: number) => {
     let title: string = ''
     // let content: { text: string, callback_data: string }[][]
-    const tx = await helper.airdrop(chatId)
-    if (tx) {
+    const res = await helper.airdrop(chatId)
+    if (res.tx) {
         title = `Transaction success`
-        const content = [[{ text: `🔎 View on explorer`, url: `https://gnosisscan.io/tx/${tx}` }]]
+        const content = [[{ text: `🔎 View on explorer`, url: `https://gnosisscan.io/tx/${res.tx}` }]]
+        return { title, content }
+    } else if (res.error) {
+        title = `Can't get airdrop`
+        const content = [[{ text: `💸 You have already claimed`, callback_data: 'ok' }]]
         return { title, content }
     } else {
         title = `Transaction failed`
         const content = [[{ text: `Transaction failed`, callback_data: `start_menu` }]]
         return { title, content }
     }
+}
+
+export const help = async () => {
+    return {
+        title: `
+Welcome to Our Telegram Bot!
+
+We're excited to have you here! This bot allows you to claim tokens from our channel, and we're happy to guide you through the process.
+
+Getting Started
+
+To begin, simply select the "Start" option from the menu list. You'll then be prompted to choose whether you want to start the claiming process. Please follow the prompts to input your wallet address, and our bot will guide you through the rest of the process.
+
+Claiming Tokens
+
+Once you've entered your wallet address, our bot will check its validity and provide a button to let you receive the tokens. Click this button, and we'll send you our tokens according to our allocation.
+
+Important Note
+
+If you've already claimed these tokens, you'll see a message saying "You already claimed." Don't worry, we'll let you know when new tokens are available for claiming.
+
+Checking Your Wallet Status
+
+If you want to check your wallet status, simply click on the "Address" option from the menu list. You'll see your current balance and any outstanding tokens.
+
+Viewing Your Allocation
+
+To check your token allocation, click on the "Amount" option from the menu list. You'll see how many tokens you've been allocated and how many are still available for claiming.
+
+That's it! We're happy to have you on board and look forward to sending you our tokens.`}
+
 }

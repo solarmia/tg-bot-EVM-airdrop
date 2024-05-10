@@ -27,7 +27,7 @@ export const addressAddDB = async (userId: number, address: string) => {
 export const addressCheckDB = async (userId: number) => {
   try {
     const data = await UserModel.findOne({ userId }).select('address')
-    if(data) return data.address
+    if (data) return data.address
     else return ''
   } catch (e) {
     console.log(e)
@@ -46,7 +46,11 @@ export const amountCheckDB = async (userId: number) => {
 }
 
 export const airdrop = async (userId: number) => {
-  // web3 airdrop -> get txhash
+  // web3 airdrop -> get txhash -> check if tx success
+  const origin = await UserModel.findOne({ userId })
+  if (origin?.claimable) return { error: 'you have alredy claimed' }
+  // make tx
   const data = '0xae833772b424beb49d987af5f8dd6049cf5bb57d272e319577b31c0ef63d1643'
-  return data
+  const result = await UserModel.findOneAndUpdate({ userId }, { claimable: true, claimTime: new Date() }, { new: true })
+  return { tx: data }
 }

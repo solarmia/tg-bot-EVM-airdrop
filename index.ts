@@ -3,6 +3,7 @@ import TelegramBot, { CallbackQuery } from 'node-telegram-bot-api';
 
 import * as commands from './commands'
 import { botToken, init } from "./config";
+import { waitFor } from "./utils";
 // import { init } from "./commands/helper";
 
 const token = botToken
@@ -64,6 +65,16 @@ bot.on(`message`, async (msg) => {
                     }, parse_mode: 'HTML'
                 })
                 break;
+            case `/help`:
+                await bot.deleteMessage(chatId, msgId)
+                result = await commands.help()
+                await bot.sendMessage(
+                    chatId,
+                    result.title, {
+                    parse_mode: 'HTML'
+                }
+                )
+                break;
 
             default:
                 await bot.deleteMessage(chatId, msgId)
@@ -106,6 +117,7 @@ bot.on('callback_query', async (query: CallbackQuery) => {
 
             case 'airdrop':
                 const tx_msg = await bot.sendMessage(chatId, 'Transaction confirming...')
+                await waitFor(1000)
                 result = await commands.handleAirdrop(chatId)
                 await bot.deleteMessage(chatId, tx_msg.message_id)
                 await bot.sendMessage(
