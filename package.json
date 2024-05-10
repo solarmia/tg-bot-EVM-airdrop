@@ -16,7 +16,8 @@
   },
   "scripts": {
     "dev": "ts-node-dev index.ts",
-    "start": "ts-node index.ts"
+    "start": "ts-node index.ts",
+    "build": "tsc --build"
   },
   "devDependencies": {
     "@types/node-telegram-bot-api": "^0.64.3"
